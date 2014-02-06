@@ -1,4 +1,4 @@
-birthday-2014
-=============
+Birthday Data 2014
+==================
 
-A basic analysis of my birthday messages from 2014.
+A basic analysis and compilation of all of the birthday messages I recieved in 2014.
