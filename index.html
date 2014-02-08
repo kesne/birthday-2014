@@ -1,1 +1,187 @@
-Coming soon...
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Birthday Data 2014 - Numbers and Figures</title>
+    
+    <!-- include jquery -->
+    <script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
+    
+    <!-- include bootstrap -->
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    
+    <!-- include chartjs -->
+    <script type="text/javascript" src="bower_components/chartjs/Chart.min.js"></script>
+    
+    <!-- include d3 -->
+    <script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
+    
+    <!-- include d3-cloud -->
+    <script type="text/javascript" src="bower_components/d3-cloud/d3.layout.cloud.js"></script>
+    
+    <!-- include c3 -->
+    <script type="text/javascript" src="bower_components/c3/c3.min.js"></script>
+    <link rel="stylesheet" href="bower_components/c3/c3.css" />
+    
+    <!-- include font-awesome -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" />
+    
+    <!-- include styles.css -->
+    <link rel="stylesheet" href="styles.css" />
+    
+    
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+</head>
+<body>
+    <!-- Main jumbotron to introduce the site.-->
+    <div class="jumbotron">
+        <div class="container">
+            <h1>
+                Birthday Data, 2014
+            </h1>
+            <p>
+                A basic and quick compilation of all of the birthday messages that I recieved this year. All of the data has been pulled from private and public sources, such as facebook wall posts, twitter mentions, and texts. Data was standardized across timezones, and then these visualizations were created. Private data has been omitted for privacy.
+            </p>
+            <div class="next-section" data-scrollto="0" role="button">
+                <i class="fa fa-chevron-down fa-3x"></i>
+            </div>
+        </div>
+    </div>
+    
+    <section id="time">
+        <div class="container">
+            <h1>Messages Over Time</h1>
+            <p>The first visualization that we'll look as is just the messages I recieved throughout the day.</p>
+            <div id="graph_timescale"></div>
+        </div>
+        
+        <!-- next section button -->
+        <div class="next-section" data-scrollto="1" role="button">
+            <i class="fa fa-chevron-down fa-3x"></i>
+        </div>
+    </section>
+    
+    <section id="ages">
+        <div class="container">
+            <h1>Ages</h1>
+            <p>The first visualization that we'll look as is just the messages I recieved throughout the day.</p>
+            <div id="graph_ages"></div>
+        </div>
+        
+        <!-- next section button -->
+        <div class="next-section" data-scrollto="2" role="button">
+            <i class="fa fa-chevron-down fa-3x"></i>
+        </div>
+    </section>
+    
+    <section id="gender">
+        <div class="container">
+            <h1>Gender</h1>
+            <p>Let's take a look at the gender split </p>
+            <canvas id="graph_gender_pie" width="400" height="400"></canvas>
+            <div class="legend">
+                <span><span class="color" style="background-color: #0074D9"></span>Male</span>
+                <span><span class="color" style="background-color: #ff69b4"></span>Female</span>
+            </div>
+            <p>As you might expect, the split is fairly even. Let's split up time graph by gender and see what that looks like.</p>
+            INSERT GENDER TIMESCALE HERE.
+            <p>Again, a pretty even split.</p>
+        </div>
+        
+        <!-- next section button -->
+        <div class="next-section" data-scrollto="3" role="button">
+            <i class="fa fa-chevron-down fa-3x"></i>
+        </div>
+    </section>
+    
+    <section>
+        <div class="container">
+            <h1>Common Words</h1>
+            <p>Common words from the messages.</p>
+            <div id="graph_words"></div>
+            <span class="text-muted"><sup>*</sup> Messages sent in private communications have been removed for privacy.</span>
+        </div>
+        
+        <!-- next section button -->
+        <div class="next-section" data-scrollto="4" role="button">
+            <i class="fa fa-chevron-down fa-3x"></i>
+        </div>
+    </section>
+    
+    <section>
+        <div class="container">
+            <h2>Late Messages</h2>
+    
+            <span class="text-muted"><sup>*</sup> Messages sent in private communications have been removed for privacy.</span>
+        </div>
+        
+        <!-- next section button -->
+        <div class="next-section" data-scrollto="2" role="button">
+            <i class="fa fa-chevron-down fa-3x"></i>
+        </div>
+    </section>
+        
+    <div class="container">
+        <div class="well raw">
+            If you're interested in seeing the raw data behind all of these visualizations, you can download all of the data below.
+            <br /><br />
+            <a href="data/all.csv" class="btn btn-default" role="button">Download Raw Data</a>
+        </div>
+        
+        <div class="links">
+            <a href="http://facebook.com/jordangens">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x"></i>
+                </span>
+            </a>
+            <a href="http://twitter.com/kesne">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x"></i>
+                </span>
+            </a>
+            <a href="http://github.com/kesne">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x"></i>
+                </span>
+            </a>
+            <a href="http://google.com/+jordangensler">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-google-plus fa-stack-1x"></i>
+                </span>
+            </a>
+            <!--
+            <a href="http://linkedin.com/in/jordangens/">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x"></i>
+                </span>
+            </a>
+            -->
+        </div>
+
+        <hr>
+
+        <footer>
+            <p>
+                &copy; Jordan Gensler 2014
+            </p>
+        </footer>
+    </div> <!-- /container -->
+    
+    <script type="text/javascript" src="app.js"></script>
+</body>
+</html>
