@@ -24,18 +24,62 @@ $(function(){
     
     var timescale = c3.generate({
         data: {
-            x: 'x',
-            columns: [
-                ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06'],
-                ['sample', 30, 200, 100, 400, 150, 250]
+            rows: [
+                ['Number Of Messages'],
+                [0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]
             ]
         },
-        axis : {
-            x : {
-                type : 'timeseries'
+        axis: {
+            x: {
+                type: 'categorized',
+                categories: [
+                    '12am',
+                    '1am',
+                    '2am',
+                    '3am',
+                    '4am',
+                    '5am',
+                    '6am',
+                    '7am',
+                    '8am',
+                    '9am',
+                    '10am',
+                    '11am',
+                    '12pm',
+                    '1pm',
+                    '2pm',
+                    '3pm',
+                    '4pm',
+                    '5pm',
+                    '6pm',
+                    '7pm',
+                    '8pm',
+                    '9pm',
+                    '10pm',
+                    '11pm',
+                    '',
+                ]
             }
         },
+        //Highlight what we call "night"
+        regions: [
+            {start: 0, end: 6, class: 'Night'},
+            {start: 22, end: 24, class: 'Night'}
+        ],
         bindto: '#graph_timescale'
+    });
+    
+    //Get the timedata. This is mostly just occurance-based data, so we have to set it up a little differently.
+    var timedata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    d3.csv('data/all.csv', function(d){
+        timedata[moment(d.datetime).hour()]++;
+    }, function(err, rows){
+        var td = _.map(timedata, function(d){
+            return [d];
+        });
+        td.splice(0, 0, ['Number Of Messages']);
+        console.log(td);
+        timescale.load({rows: td});
     });
     
     var ages = c3.generate({
