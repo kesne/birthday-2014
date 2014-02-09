@@ -27,7 +27,8 @@ $(function(){
             rows: [
                 ['Number Of Messages'],
                 [0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]
-            ]
+            ],
+            type: 'spline'
         },
         axis: {
             x: {
@@ -68,35 +69,55 @@ $(function(){
         ],
         bindto: '#graph_timescale'
     });
-    
-    //Get the timedata. This is mostly just occurance-based data, so we have to set it up a little differently.
-    var timedata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    d3.csv('data/all.csv', function(d){
-        timedata[moment(d.datetime).hour()]++;
-    }, function(err, rows){
-        var td = _.map(timedata, function(d){
-            return [d];
+            
+    window.setTimeout(function(){
+        //Get the timedata. This is mostly just occurance-based data, so we have to set it up a little differently.
+        var timedata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        d3.csv('data/all.csv', function(d){
+            timedata[moment(d.datetime).hour()]++;
+        }, function(err, rows){
+            var td = _.map(timedata, function(d){
+                return [d];
+            });
+            td.splice(0, 0, ['Number Of Messages']);
+            console.log(td);
+            timescale.load({rows: td});
         });
-        td.splice(0, 0, ['Number Of Messages']);
-        console.log(td);
-        timescale.load({rows: td});
-    });
+    }, 1000);
     
-    var ages = c3.generate({
+    ages = c3.generate({
         data: {
             columns: [
-                ['Age', 30, 200, 100, 400, 150, 250]
+                ['Age', 0, 0, 0, 0]
             ],
             type: 'bar'
         },
         axis: {
             x: {
                 type: 'categorized',
-                categories: ['0-10', '11-20', '21-30', '31-40', '40+']
+                categories: ['0-20', '21-30', '31-40', '40+']
             }
         },
         bindto: '#graph_ages'
     });
+    window.setTimeout(function(){
+        var agedata = ['Age', 0, 0, 0, 0];
+        d3.csv('data/all.csv', function(d){
+            d.age = +d.age;
+            if(d.age <= 20){
+                agedata[1]++;
+            }else if(d.age <= 30){
+                agedata[2]++;
+            }else if(d.age <= 40){
+                agedata[3]++;
+            }else{
+                agedata[4]++;
+            }
+        }, function(err, rows){
+            ages.load({columns: [agedata]});
+        });
+    }, 1000);
+    
     
     var fill = d3.scale.category20();
     d3.layout.cloud().size([300, 300])
@@ -131,16 +152,26 @@ $(function(){
         .text(function(d) { return d.text; });
     }
     
-    var data = [
+    var genderdata = [
+        //female
     	{
-    		value: 48,
+    		value: 0,
     		color:"#ff69b4"
     	},
+        //male
     	{
-    		value : 52,
+    		value : 0,
     		color : "#0074D9"
     	}			
     ];
-    var ctx = $("#graph_gender_pie").get(0).getContext("2d");
-    var gender = new Chart(ctx).Pie(data);
+    d3.csv('data/all.csv', function(d){
+        if(d.gender === 'female'){
+            genderdata[0].value++;
+        }else{
+            genderdata[1].value++;
+        }
+    }, function(err, rows){
+        var ctx = $("#graph_gender_pie").get(0).getContext("2d");
+        var gender = new Chart(ctx).Pie(genderdata);
+    });
 });
