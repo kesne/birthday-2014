@@ -64,7 +64,7 @@ $(function(){
         },
         //Highlight what we call "night"
         regions: [
-            {start: 0, end: 6, class: 'Night'},
+            {start: -1, end: 6, class: 'Night'},
             {start: 22, end: 24, class: 'Night'}
         ],
         bindto: '#graph_timescale'
@@ -80,7 +80,6 @@ $(function(){
                 return [d];
             });
             td.splice(0, 0, ['Number Of Messages']);
-            console.log(td);
             timescale.load({rows: td});
         });
     }, 1000);
@@ -88,12 +87,13 @@ $(function(){
     ages = c3.generate({
         data: {
             columns: [
-                ['Age', 0, 0, 0, 0]
+                ['Number Of Messages', 0, 0, 0, 0]
             ],
             type: 'bar'
         },
         axis: {
             x: {
+                label: 'Age',
                 type: 'categorized',
                 categories: ['0-20', '21-30', '31-40', '40+']
             }
@@ -101,7 +101,7 @@ $(function(){
         bindto: '#graph_ages'
     });
     window.setTimeout(function(){
-        var agedata = ['Age', 0, 0, 0, 0];
+        var agedata = ['Number Of Messages', 0, 0, 0, 0];
         d3.csv('data/all.csv', function(d){
             d.age = +d.age;
             if(d.age <= 20){
@@ -115,6 +115,71 @@ $(function(){
             }
         }, function(err, rows){
             ages.load({columns: [agedata]});
+        });
+    }, 1000);
+
+    var agelines = c3.generate({
+        data: {
+            columns: [
+                ['Younger', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                ['Older', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            ],
+            type: 'spline'
+        },
+        axis: {
+            x: {
+                type: 'categorized',
+                categories: [
+                    '12am',
+                    '1am',
+                    '2am',
+                    '3am',
+                    '4am',
+                    '5am',
+                    '6am',
+                    '7am',
+                    '8am',
+                    '9am',
+                    '10am',
+                    '11am',
+                    '12pm',
+                    '1pm',
+                    '2pm',
+                    '3pm',
+                    '4pm',
+                    '5pm',
+                    '6pm',
+                    '7pm',
+                    '8pm',
+                    '9pm',
+                    '10pm',
+                    '11pm',
+                    '',
+                ]
+            }
+        },
+        //Highlight what we call "night"
+        regions: [
+            {start: -1, end: 6, class: 'Night'},
+            {start: 22, end: 24, class: 'Night'}
+        ],
+        bindto: '#graph_age_lines'
+    });
+            
+    window.setTimeout(function(){
+        //Get the timedata. This is mostly just occurance-based data, so we have to set it up a little differently.
+        var youngdata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        var olddata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        d3.csv('data/all.csv', function(d){
+            if(+d.age <= 20){
+                youngdata[moment(d.datetime).hour()]++;
+            }else{
+                olddata[moment(d.datetime).hour()]++;
+            }
+        }, function(err, rows){
+            youngdata.splice(0, 0, ['Younger']);
+            olddata.splice(0, 0, ['Older']);
+            agelines.load({columns: [youngdata, olddata]});
         });
     }, 1000);
     
@@ -147,7 +212,7 @@ $(function(){
         .style("fill", function(d, i) { return fill(i); })
         .attr("text-anchor", "middle")
         .attr("transform", function(d) {
-          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+          return "translate(" + [d.x, d.y] + ")";
         })
         .text(function(d) { return d.text; });
     }
@@ -174,4 +239,68 @@ $(function(){
         var ctx = $("#graph_gender_pie").get(0).getContext("2d");
         var gender = new Chart(ctx).Pie(genderdata);
     });
+
+    var genderlines = c3.generate({
+        data: {
+            columns: [
+                ['Male', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                ['Female', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            ],
+            type: 'spline'
+        },
+        axis: {
+            x: {
+                type: 'categorized',
+                categories: [
+                    '12am',
+                    '1am',
+                    '2am',
+                    '3am',
+                    '4am',
+                    '5am',
+                    '6am',
+                    '7am',
+                    '8am',
+                    '9am',
+                    '10am',
+                    '11am',
+                    '12pm',
+                    '1pm',
+                    '2pm',
+                    '3pm',
+                    '4pm',
+                    '5pm',
+                    '6pm',
+                    '7pm',
+                    '8pm',
+                    '9pm',
+                    '10pm',
+                    '11pm',
+                    '',
+                ]
+            }
+        },
+        bindto: '#graph_gender_lines'
+    });
+            
+    window.setTimeout(function(){
+        //Get the timedata. This is mostly just occurance-based data, so we have to set it up a little differently.
+        var maledata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        var femaledata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        d3.csv('data/all.csv', function(d){
+            if(d.gender === 'male'){
+                maledata[moment(d.datetime).hour()]++;
+            }else{
+                femaledata[moment(d.datetime).hour()]++;
+            }
+        }, function(err, rows){
+            maledata.splice(0, 0, ['Male']);
+            femaledata.splice(0, 0, ['Female']);
+            genderlines.load({columns: [maledata, femaledata]});
+        });
+    }, 1000);
+
+
+
+
 });
