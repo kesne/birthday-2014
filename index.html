@@ -56,7 +56,7 @@
                 Birthday Data, 2014
             </h1>
             <p>
-                A basic and quick compilation of all of the birthday messages that I recieved this year. All of the data has been pulled from private and public sources, such as facebook wall posts, twitter mentions, and texts. Data was standardized across timezones, and then these visualizations were created. Private data has been omitted for privacy.
+                A basic and quick compilation of all of the birthday messages that I received this year. All of the data has been pulled from private and public sources, such as Facebook wall posts, Twitter mentions, and texts. Data was standardized across timezones, and then these visualizations were created. Private data has been omitted for privacy.
             </p>
             <div class="next-section" data-scrollto="0" role="button">
                 <i class="fa fa-chevron-down fa-3x"></i>
@@ -67,7 +67,7 @@
     <section id="time">
         <div class="container">
             <h1>Messages Over Time</h1>
-            <p class="lead">The first visualization that we'll look as is just the messages I recieved throughout the day. The messages here are grouped by the hour, and the shaded sections represent night time. As you can see, there are less messages recieved during night, and several messages were sent early in the morning. The likely cause of this is that people woke up, remembered it was my birthday (or checked facebook), and sent me a message.</p>
+            <p class="lead">The first visualization that we'll look as is just the messages I received throughout the day. The messages here are grouped by the hour, and the shaded sections represent night time. As you can see, there are less messages received during night, and several messages were sent early in the morning. The likely cause of this is that people woke up, remembered it was my birthday (or checked Facebook), and sent me a message.</p>
             <div id="graph_timescale"></div>
             <p class="lead">In addition to this, many messages were sent in the first hour of my birthday. This is expected, as many caring people wish happy birthday the exact second that it is 12:00pm.</p>
         </div>
@@ -83,6 +83,7 @@
             <h1>Ages</h1>
             <p class="lead">Looking at the ages of the senders, we see no surprises. The largest age group is 0-20, which is the majority age of my friends and acquaintances. The largest contributing factor here is really my age, as I myself just turned 20, and have friends of similar ages. For ages above 30, most of the senders were either co-workers or family.</p>
             <div id="graph_ages"></div>
+            <p class="lead">By splitting between the two groups (those age 20 and younger, and those older than 20), we can try to find trends in timing. As you can see in the visualization below, the older individuals tended to send birthday messages much earlier.</p>
             <div id="graph_age_lines"></div>
         </div>
         
@@ -95,15 +96,14 @@
     <section id="gender">
         <div class="container">
             <h1>Gender</h1>
-            <p>Let's take a look at the gender split </p>
+            <p class="lead">Let's take a look at the gender split in the senders. As you can see, most of the sender were male. This result is fairly expected, as a quick look through my Facebook friends shows that about 2/3 of them are male.</p>
             <canvas id="graph_gender_pie" width="400" height="400"></canvas>
             <div class="legend">
                 <span><span class="color" style="background-color: #0074D9"></span>Male</span>
                 <span><span class="color" style="background-color: #ff69b4"></span>Female</span>
             </div>
-            <p>As you might expect, the split is fairly even. Let's split up time graph by gender and see what that looks like.</p>
+            <p class="lead">We can also see how men and women differ in the time that they post. As expected, there isn't any serious difference between the two groups.</p>
             <div id="graph_gender_lines"></div>
-            <p>Again, a pretty even split.</p>
         </div>
         
         <!-- next section button -->
@@ -112,12 +112,12 @@
         </div>
     </section>
     
-    <section>
+    <section id="words">
         <div class="container">
             <h1>Common Words</h1>
-            <p>Common words from the messages.</p>
+            <p class="lead">Now let's take a look at the most common words from the messages. Nothing should surprise you.</p>
             <div id="graph_words"></div>
-            <span class="text-muted"><sup>*</sup> Messages sent in private communications have been removed for privacy.</span>
+            <span class="text-muted centered-text"><sup>*</sup> Messages sent in private communications have been removed for privacy.</span>
         </div>
         
         <!-- next section button -->
@@ -126,10 +126,15 @@
         </div>
     </section>
     
-    <section>
+    <section id="late">
         <div class="container">
             <h2>Late Messages</h2>
-    
+            <p class="lead">Some people were off their game and sent a message after my birthday. Though as you can see below, it's a pretty small portion (thankfully).</p>
+            <canvas id="graph_late" width="400" height="400"></canvas>
+            <div class="legend">
+                <span><span class="color" style="background-color: #3c763d"></span>On-Time</span>
+                <span><span class="color" style="background-color: #a94442"></span>Late</span>
+            </div>
         </div>
     </section>
         
@@ -153,16 +158,16 @@
                   <i class="fa fa-twitter fa-stack-1x"></i>
                 </span>
             </a>
-            <a href="http://github.com/kesne">
-                <span class="fa-stack fa-lg">
-                  <i class="fa fa-square-o fa-stack-2x"></i>
-                  <i class="fa fa-github fa-stack-1x"></i>
-                </span>
-            </a>
             <a href="http://google.com/+jordangensler">
                 <span class="fa-stack fa-lg">
                   <i class="fa fa-square-o fa-stack-2x"></i>
                   <i class="fa fa-google-plus fa-stack-1x"></i>
+                </span>
+            </a>
+            <a href="http://github.com/kesne">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x"></i>
                 </span>
             </a>
             <!--

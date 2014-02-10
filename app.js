@@ -121,8 +121,8 @@ $(function(){
     var agelines = c3.generate({
         data: {
             columns: [
-                ['Younger', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                ['Older', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                ['Younger', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                ['Older', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             ],
             type: 'spline'
         },
@@ -183,40 +183,6 @@ $(function(){
         });
     }, 1000);
     
-    
-    var fill = d3.scale.category20();
-    d3.layout.cloud().size([300, 300])
-      .words([
-        "Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this"].map(function(d) {
-        return {text: d, size: 10 + Math.random() * 90};
-      }))
-      .padding(5)
-      .rotate(function() { return 0; })
-      .font('"Helvetica Neue", Helvetica, Arial sans-serif')
-      .fontSize(function(d) { return d.size; })
-      .on("end", draw)
-      .start();
-    
-    function draw(words) {
-    d3.select("#graph_words").append("svg")
-        .attr("width", 300)
-        .attr("height", 300)
-      .append("g")
-        .attr("transform", "translate(150,150)")
-      .selectAll("text")
-        .data(words)
-      .enter().append("text")
-        .style("font-size", function(d) { return d.size + "px"; })
-        .style("font-family", "Impact")
-        .style("fill", function(d, i) { return fill(i); })
-        .attr("text-anchor", "middle")
-        .attr("transform", function(d) {
-          return "translate(" + [d.x, d.y] + ")";
-        })
-        .text(function(d) { return d.text; });
-    }
-    
     var genderdata = [
         //female
     	{
@@ -243,8 +209,8 @@ $(function(){
     var genderlines = c3.generate({
         data: {
             columns: [
-                ['Male', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                ['Female', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                ['Male', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                ['Female', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             ],
             type: 'spline'
         },
@@ -301,6 +267,77 @@ $(function(){
     }, 1000);
 
 
+    var words = {};
+    d3.csv('data/all.csv', function(d){
+        var s = d.message;
+        var punctuationless = s.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+        s = punctuationless.replace(/\s{2,}/g," ");
+        _.each(s.split(' '), function(word){
+            if(word){
+                word = word.toLowerCase();
+                if(!words[word]){
+                    words[word] = {
+                        text: word,
+                        size: 10
+                    }
+                }
+                words[word].size++;
+            }
+        });
+    }, function(err, rows){
+        console.log(words);
+        var fill = d3.scale.category20();
+        d3.layout.cloud().size([700, 400])
+          .words(_.values(words) )
+          .padding(5)
+          .rotate(function() { return 0; })
+          .font('"Helvetica Neue", Helvetica, Arial sans-serif')
+          .fontSize(function(d) { return d.size; })
+          .on("end", draw)
+          .start();
+        
+        function draw(words) {
+            d3.select("#graph_words").append("svg")
+                .attr("width", 700)
+                .attr("height", 400)
+              .append("g")
+                .attr("transform", "translate(350,200)")
+              .selectAll("text")
+                .data(words)
+              .enter().append("text")
+                .style("font-size", function(d) { return d.size + "px"; })
+                .style("font-family", '"Helvetica Neue", Helvetica, Arial sans-serif')
+                .style("fill", function(d, i) { return fill(i); })
+                .attr("text-anchor", "middle")
+                .attr("transform", function(d) {
+                  return "translate(" + [d.x, d.y] + ")";
+                })
+                .text(function(d) { return d.text; });
+        }
+    });
 
+
+    var late = [
+        //on-time
+    	{
+    		value: 0,
+    		color:"#3c763d"
+    	},
+        //late
+    	{
+    		value : 0,
+    		color : "#a94442"
+    	}			
+    ];
+    d3.csv('data/all.csv', function(d){
+        if(d.late === 'yes'){
+            late[1].value++;
+        }else{
+            late[0].value++;
+        }
+    }, function(err, rows){
+        var ctx = $("#graph_late").get(0).getContext("2d");
+        var gender = new Chart(ctx).Doughnut(late);
+    });
 
 });

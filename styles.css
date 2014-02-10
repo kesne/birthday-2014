@@ -7,6 +7,21 @@
 	max-height: 700px;
 }
 
+p.lead {
+    margin: 20px 0;
+}
+
+.centered-text {
+    text-align: center;
+    display: block;
+    margin: 0px auto;
+}
+
+#graph_words > svg {
+    display: block;
+    margin: 0px auto;
+}
+
 .links {
 	margin: 50px auto;
 	text-align: center;
